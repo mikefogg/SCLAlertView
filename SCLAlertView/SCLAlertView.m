@@ -23,8 +23,9 @@
 
 #define KEYBOARD_HEIGHT 80
 #define PREDICTION_BAR_HEIGHT 40
-#define ADD_BUTTON_PADDING 10.0f
-#define DEFAULT_WINDOW_WIDTH 240
+#define ADD_BUTTON_PADDING 0.0f
+#define EDGES_PADDING 40.0f
+#define DEFAULT_WINDOW_WIDTH [UIScreen mainScreen].bounds.size.width - EDGES_PADDING
 
 @interface SCLAlertView ()  <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -172,10 +173,10 @@ SCLTimerDisplay *buttonTimer;
     self.tintTopCircle = YES;
     
     // Font
-    _titleFontFamily = @"HelveticaNeue";
-    _bodyTextFontFamily = @"HelveticaNeue";
-    _buttonsFontFamily = @"HelveticaNeue-Bold";
-    _titleFontSize = 20.0f;
+    _titleFontFamily = @"SourceSansPro-Bold";
+    _bodyTextFontFamily = @"SourceSansPro-Regular";
+    _buttonsFontFamily = @"SourceSansPro-Regular";
+    _titleFontSize = 14.0f;
     _bodyFontSize = 14.0f;
     _buttonsFontSize = 14.0f;
     
@@ -198,11 +199,11 @@ SCLTimerDisplay *buttonTimer;
     // Circle View
     CGFloat x = (kCircleHeightBackground - kCircleHeight) / 2;
     _circleView.frame = CGRectMake(x, x, kCircleHeight, kCircleHeight);
-    _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
+    //_circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
     
     // Circle Background View
     _circleViewBackground.backgroundColor = [UIColor whiteColor];
-    _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
+    //_circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
     x = (kCircleHeight - _circleIconHeight) / 2;
     
     // Circle Image View
@@ -237,9 +238,10 @@ SCLTimerDisplay *buttonTimer;
     
     // Content View
     _contentView.backgroundColor = [UIColor whiteColor];
-    _contentView.layer.cornerRadius = 5.0f;
+    //_contentView.layer.cornerRadius = 5.0f;
     _contentView.layer.masksToBounds = YES;
-    _contentView.layer.borderWidth = 0.5f;
+    _contentView.clipsToBounds = YES;
+    //_contentView.layer.borderWidth = 0.5f;
     [_contentView addSubview:_viewText];    
 
     CGRect position = [self.contentView convertRect:self.labelTitle.frame toView:self.view];
@@ -248,9 +250,15 @@ SCLTimerDisplay *buttonTimer;
     
     // Colors
     self.backgroundViewColor = [UIColor whiteColor];
-    _labelTitle.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
-    _viewText.textColor = UIColorFromHEX(0x4D4D4D); //Dark Grey
+    _labelTitle.textColor = [UIColor colorWithRed:0.46 green:0.46 blue:0.46 alpha:1.00]; //Dark Grey
+    _viewText.textColor = [UIColor colorWithRed:0.64 green:0.64 blue:0.64 alpha:1.00]; //Light Grey
     _contentView.layer.borderColor = UIColorFromHEX(0xCCCCCC).CGColor; //Light Grey
+    
+    // Shadow
+    self.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.view.layer.shadowOpacity = 0.3f;
+    self.view.layer.shadowOffset = CGSizeMake(0.0f, -4.0f);
+    self.view.layer.shadowRadius = 20.0f;
 }
 
 - (void)setupNewWindow
@@ -340,10 +348,10 @@ SCLTimerDisplay *buttonTimer;
         // Set frames
         self.view.frame = r;
         _contentView.frame = CGRectMake(0.0f, 0.0f, _windowWidth, _windowHeight);
-        _circleViewBackground.frame = CGRectMake(_windowWidth / 2 - kCircleHeightBackground / 2, kCircleBackgroundTopPosition, kCircleHeightBackground, kCircleHeightBackground);
-        _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
-        _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
-        _circleIconImageView.frame = CGRectMake(kCircleHeight / 2 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
+        _circleViewBackground.frame = CGRectMake(0, kCircleBackgroundTopPosition, _windowWidth, kCircleHeightBackground);
+        //_circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
+        //_circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
+        _circleIconImageView.frame = CGRectMake(_circleViewBackground.frame.size.width / 2 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
         _labelTitle.frame = CGRectMake(12.0f, kTitleTop, _windowWidth - 24.0f, kTitleHeight);
     }
     else
@@ -353,11 +361,11 @@ SCLTimerDisplay *buttonTimer;
         
         _contentView.frame = CGRectMake(x, y, _windowWidth, _windowHeight);
         y -= kCircleHeightBackground / 2;
-        x = (sz.width - kCircleHeightBackground) / 2;
-        _circleView.layer.cornerRadius = _circleView.frame.size.height / 2;        
-        _circleViewBackground.frame = CGRectMake(x, y, kCircleHeightBackground, kCircleHeightBackground);
-        _circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;        
-        _circleIconImageView.frame = CGRectMake(kCircleHeight / 2 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
+        //x = (sz.width - kCircleHeightBackground) / 2;
+        //_circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
+        _circleViewBackground.frame = CGRectMake(x, y, _windowWidth, kCircleHeightBackground);
+        //_circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
+        _circleIconImageView.frame = CGRectMake(_circleViewBackground.frame.size.width / 2 - 10 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
         _labelTitle.frame = CGRectMake(12.0f + self.contentView.frame.origin.x, kTitleTop + self.contentView.frame.origin.y, _windowWidth - 24.0f, kTitleHeight);
     }
     
@@ -380,7 +388,7 @@ SCLTimerDisplay *buttonTimer;
     }
     
     // Buttons
-    CGFloat x = 12.0f;
+    CGFloat x = 0;
     for (SCLButton *btn in _buttons)
     {
         btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
@@ -389,7 +397,7 @@ SCLTimerDisplay *buttonTimer;
         if (_horizontalButtons) {
             x += btn.frame.size.width + 10.0f;
         } else {
-            y += btn.frame.size.height + 10.0f;
+            y += btn.frame.size.height;
         }
     }
     
@@ -398,7 +406,7 @@ SCLTimerDisplay *buttonTimer;
     _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, _windowWidth, _windowHeight);
     
     // Adjust corner radius, if a value has been passed
-    _contentView.layer.cornerRadius = self.cornerRadius ? self.cornerRadius : 5.0f;
+    //_contentView.layer.cornerRadius = self.cornerRadius ? self.cornerRadius : 5.0f;
 }
 
 #pragma mark - UIViewController
@@ -692,7 +700,13 @@ SCLTimerDisplay *buttonTimer;
     btn.titleLabel.font = [UIFont fontWithName:_buttonsFontFamily size:_buttonsFontSize];
     
     [_contentView addSubview:btn];
-    [_buttons addObject:btn];
+    
+    if(btn.actionBlock == SCLNone) {
+        [_buttons insertObject:btn atIndex:0];
+    }
+    else {
+        [_buttons addObject:btn];
+    }
     
     if (_horizontalButtons) {
         // Update buttons width according to the number of buttons
@@ -886,6 +900,16 @@ SCLTimerDisplay *buttonTimer;
             iconImage = image;
             self.circleIconHeight *= 2.0f;
             break;
+            
+        case ValenciaSuccess:
+            iconImage = [UIImage imageNamed:@"alert-success-icon"];
+            self.useLargerIcon = YES;
+            break;
+            
+        case ValenciaError:
+            iconImage = [UIImage imageNamed:@"alert-warning-icon"];
+            self.useLargerIcon = YES;
+            break;
     }
     
     // Custom Alert color
@@ -985,6 +1009,31 @@ SCLTimerDisplay *buttonTimer;
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
         
+        if(style == ValenciaSuccess) {
+            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
+        }
+        else if(style == ValenciaError) {
+            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
+        }
+        else if(style == ValenciaConfirmation) {
+            if(btn.actionType == SCLNone) {
+                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
+                [btn setTitleColor:[UIColor colorWithRed:0.44 green:0.43 blue:0.43 alpha:1.00] forState:UIControlStateNormal];
+            }
+            else {
+                btn.defaultBackgroundColor = [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00];
+            }
+        }
+        else if(style == ValenciaCancelConfirmation) {
+            if(btn.actionType == SCLNone) {
+                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
+            }
+            else {
+                btn.defaultBackgroundColor = [UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:1.00];
+            }
+            
+            [self removeTopCircle];
+        }
         if (!btn.defaultBackgroundColor) {
             btn.defaultBackgroundColor = viewColor;
         }
@@ -1036,14 +1085,14 @@ SCLTimerDisplay *buttonTimer;
 
 #pragma mark - Show using UIViewController
 
-- (void)showSuccess:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showSuccess:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Success];
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaSuccess];
 }
 
-- (void)showError:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showError:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Error];
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaError];
 }
 
 - (void)showNotice:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
@@ -1051,9 +1100,9 @@ SCLTimerDisplay *buttonTimer;
     [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Notice];
 }
 
-- (void)showWarning:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showWarning:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Warning];
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaWarning];
 }
 
 - (void)showInfo:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
@@ -1076,6 +1125,16 @@ SCLTimerDisplay *buttonTimer;
     [self showTitle:vc image:image color:color title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Custom];
 }
 
+- (void)showConfirmation:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
+{
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaCancelConfirmation];
+}
+
+- (void)showNegativeConfirmation:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
+{
+    [self showTitle:vc image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaCancelConfirmation];
+}
+
 - (void)showWaiting:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
     [self addActivityIndicatorView];
@@ -1090,14 +1149,14 @@ SCLTimerDisplay *buttonTimer;
 
 #pragma mark - Show using new window
 
-- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Success];
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaSuccess];
 }
 
-- (void)showError:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showError:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Error];
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaError];
 }
 
 - (void)showNotice:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
@@ -1139,6 +1198,16 @@ SCLTimerDisplay *buttonTimer;
 - (void)showQuestion:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
 {
     [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Question];
+}
+
+- (void)showConfirmation:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
+{
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaCancelConfirmation];
+}
+
+- (void)showNegativeConfirmation:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
+{
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaCancelConfirmation];
 }
 
 #pragma mark - Visibility
@@ -1185,9 +1254,9 @@ SCLTimerDisplay *buttonTimer;
 - (void)makeShadowBackground
 {
     _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    _backgroundView.backgroundColor = [UIColor blackColor];
-    _backgroundView.alpha = 0.7f;
-    _backgroundOpacity = 0.7f;
+    _backgroundView.backgroundColor = [UIColor whiteColor];
+    _backgroundView.alpha = 0.8f;
+    _backgroundOpacity = 0.8f;
 }
 
 - (void)makeBlurBackground

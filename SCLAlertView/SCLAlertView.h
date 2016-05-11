@@ -35,7 +35,12 @@ typedef NS_ENUM(NSInteger, SCLAlertViewStyle)
     Edit,
     Waiting,
     Question,
-    Custom
+    Custom,
+    ValenciaSuccess,
+    ValenciaError,
+    ValenciaWarning,
+    ValenciaConfirmation,
+    ValenciaCancelConfirmation
 };
 
 /** Alert hide animation styles
@@ -345,10 +350,9 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * @param title The text displayed on the button.
  * @param subTitle The subtitle text of the alert view.
  * @param closeButtonTitle The text for the close button.
- * @param duration The amount of time the alert will remain on screen until it is automatically dismissed. If automatic dismissal is not desired, set to 0.
  */
-- (void)showSuccess:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
-- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
+- (void)showSuccess:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
+- (void)showSuccess:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
 
 /** Show Error SCLAlertView
  *
@@ -358,8 +362,8 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * @param closeButtonTitle The text for the close button.
  * @param duration The amount of time the alert will remain on screen until it is automatically dismissed. If automatic dismissal is not desired, set to 0.
  */
-- (void)showError:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
-- (void)showError:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
+- (void)showError:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
+- (void)showError:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
 
 /** Show Notice SCLAlertView
  *
@@ -451,6 +455,14 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 - (void)showQuestion:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
 - (void)showQuestion:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration;
+
+/** Show custom Valencia SCLAlertView for different scenarios
+ */
+- (void)showConfirmation:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
+- (void)showConfirmation:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
+
+- (void)showNegativeConfirmation:(UIViewController *)vc title:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
+- (void)showNegativeConfirmation:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle;
 
 @end
 
