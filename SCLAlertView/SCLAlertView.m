@@ -176,9 +176,9 @@ SCLTimerDisplay *buttonTimer;
     _titleFontFamily = @"SourceSansPro-Bold";
     _bodyTextFontFamily = @"SourceSansPro-Regular";
     _buttonsFontFamily = @"SourceSansPro-Regular";
-    _titleFontSize = 14.0f;
-    _bodyFontSize = 14.0f;
-    _buttonsFontSize = 14.0f;
+    _titleFontSize = 16.0f;
+    _bodyFontSize = 16.0f;
+    _buttonsFontSize = 16.0f;
     
     // Init
     _labelTitle = [[UILabel alloc] init];
