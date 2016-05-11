@@ -26,6 +26,7 @@
 #define ADD_BUTTON_PADDING 0.0f
 #define EDGES_PADDING 40.0f
 #define DEFAULT_WINDOW_WIDTH [UIScreen mainScreen].bounds.size.width - EDGES_PADDING
+#define TOP_PADDING 30.0f
 
 @interface SCLAlertView ()  <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -242,8 +243,8 @@ SCLTimerDisplay *buttonTimer;
     _contentView.layer.masksToBounds = YES;
     _contentView.clipsToBounds = YES;
     //_contentView.layer.borderWidth = 0.5f;
-    [_contentView addSubview:_viewText];    
-
+    [_contentView addSubview:_viewText];
+    
     CGRect position = [self.contentView convertRect:self.labelTitle.frame toView:self.view];
     _labelTitle.frame = position;
     [self.view addSubview:_labelTitle];
@@ -360,12 +361,12 @@ SCLTimerDisplay *buttonTimer;
         CGFloat y = (sz.height - _windowHeight - (kCircleHeight / 8)) / 2;
         
         _contentView.frame = CGRectMake(x, y, _windowWidth, _windowHeight);
-        y -= kCircleHeightBackground / 2;
+        y -= kCircleHeightBackground / 2 + TOP_PADDING;
         //x = (sz.width - kCircleHeightBackground) / 2;
         //_circleView.layer.cornerRadius = _circleView.frame.size.height / 2;
-        _circleViewBackground.frame = CGRectMake(x, y, _windowWidth, kCircleHeightBackground);
+        _circleViewBackground.frame = CGRectMake(x, y, _windowWidth, kCircleHeightBackground + TOP_PADDING);
         //_circleViewBackground.layer.cornerRadius = _circleViewBackground.frame.size.height / 2;
-        _circleIconImageView.frame = CGRectMake(_circleViewBackground.frame.size.width / 2 - 10 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2, _circleIconHeight, _circleIconHeight);
+        _circleIconImageView.frame = CGRectMake(_circleViewBackground.frame.size.width / 2 - 10 - _circleIconHeight / 2, kCircleHeight / 2 - _circleIconHeight / 2 + TOP_PADDING, _circleIconHeight, _circleIconHeight);
         _labelTitle.frame = CGRectMake(12.0f + self.contentView.frame.origin.x, kTitleTop + self.contentView.frame.origin.y, _windowWidth - 24.0f, kTitleHeight);
     }
     
@@ -1373,7 +1374,7 @@ SCLTimerDisplay *buttonTimer;
         case SlideOutFromCenter:
             [self slideOutFromCenter];
             break;
-        
+            
         case SimplyDisappear:
             [self simplyDisappear];
             break;
@@ -1684,7 +1685,7 @@ SCLTimerDisplay *buttonTimer;
 {
     self.backgroundView.alpha = 0.0f;
     self.view.alpha = 0.0f;
-
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.backgroundView.alpha = _backgroundOpacity;
         self.view.alpha = 1.0f;
@@ -2197,7 +2198,7 @@ SCLTimerDisplay *buttonTimer;
                 button = [weakSelf.alertView addButton:builder.parameterTitle actionBlock:builder.parameterActionBlock];
             }
             builder.button = button;
-            return weakSelf; 
+            return weakSelf;
         };
     }
     return _addButtonWithBuilder;
