@@ -1013,6 +1013,11 @@ SCLTimerDisplay *buttonTimer;
         if(style == ValenciaSuccess) {
             btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
         }
+        else if(style == ValenciaWarning) {
+            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
+            
+            [self removeTopCircle];
+        }
         else if(style == ValenciaError) {
             btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
         }
@@ -1165,9 +1170,9 @@ SCLTimerDisplay *buttonTimer;
     [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Notice];
 }
 
-- (void)showWarning:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
+- (void)showWarning:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle
 {
-    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:duration completeText:closeButtonTitle style:Warning];
+    [self showTitle:nil image:nil color:nil title:title subTitle:subTitle duration:0.0f completeText:closeButtonTitle style:ValenciaWarning];
 }
 
 - (void)showInfo:(NSString *)title subTitle:(NSString *)subTitle closeButtonTitle:(NSString *)closeButtonTitle duration:(NSTimeInterval)duration
