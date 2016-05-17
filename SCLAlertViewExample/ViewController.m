@@ -67,7 +67,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 
     alert.soundURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/right_answer.mp3", [NSBundle mainBundle].resourcePath]];
 
-    [alert showSuccess:kSuccessTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle duration:0.0f];
+    [alert showSuccess:kSuccessTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle];
 }
 
 - (IBAction)showSuccessWithHorizontalButtons:(id)sender {
@@ -94,7 +94,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
     
     alert.soundURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/right_answer.mp3", [NSBundle mainBundle].resourcePath]];
     
-    [alert showSuccess:kSuccessTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle duration:0.0f];
+    [alert showSuccess:kSuccessTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle];
 }
 
 - (IBAction)showError:(id)sender
@@ -103,7 +103,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
     
     [alert showError:self title:@"Hold On..."
             subTitle:@"You have not saved your Submission yet. Please save the Submission before accessing the Responses list. Blah de blah de blah, blah. Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah."
-    closeButtonTitle:@"OK" duration:0.0f];
+    closeButtonTitle:@"OK"];
 }
 
 - (IBAction)showNotice:(id)sender
@@ -119,7 +119,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 {
     SCLAlertView *alert = [[SCLAlertView alloc] init];
     
-    [alert showWarning:self title:kWarningTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle duration:0.0f];
+    [alert showWarning:self title:kWarningTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle];
 }
 
 - (IBAction)showInfo:(id)sender
