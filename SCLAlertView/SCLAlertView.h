@@ -19,7 +19,7 @@ typedef NSAttributedString* (^SCLAttributedFormatBlock)(NSString *value);
 typedef void (^SCLDismissBlock)(void);
 typedef void (^SCLForceHideBlock)(void);
 
-@interface SCLAlertView : UIViewController 
+@interface SCLAlertView : UIViewController
 
 /** Alert Styles
  *
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * (Default: NO)
  */
 @property BOOL useLargerIcon;
-    
+
 /** Title Label
  *
  * The text displayed as title.
@@ -327,6 +327,14 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * @param action A block of code to be executed when the button is pressed.
  */
 - (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action;
+
+/** Add a Button with a title, a block to handle when the button is pressed, and a formatBlock for customizing the button style.
+ *
+ * @param title The text displayed on the button.
+ * @param action A block of code to be executed when the button is pressed.
+ * @param buttonFormatBlock: a formatBlock for customizing the button style.
+ */
+- (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action buttonFormatBlock:(ButtonFormatBlock)buttonFormatBlock;
 
 /** Add a Button with a title, a block to handle validation, and a block to handle when the button is pressed and validation succeeds.
  *

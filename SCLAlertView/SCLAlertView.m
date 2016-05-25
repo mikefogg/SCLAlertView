@@ -757,6 +757,22 @@ SCLTimerDisplay *buttonTimer;
     return btn;
 }
 
+- (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action buttonFormatBlock:(ButtonFormatBlock)buttonFormatBlock
+{
+    SCLButton *btn = [self addButton:title];
+    
+    if (buttonFormatBlock != nil)
+    {
+        btn.buttonFormatBlock = buttonFormatBlock;
+    }
+    
+    btn.actionType = SCLBlock;
+    btn.actionBlock = action;
+    [btn addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return btn;
+}
+
 - (SCLButton *)addButton:(NSString *)title validationBlock:(SCLValidationBlock)validationBlock actionBlock:(SCLActionBlock)action
 {
     SCLButton *btn = [self addButton:title actionBlock:action];
