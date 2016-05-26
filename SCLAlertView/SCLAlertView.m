@@ -174,8 +174,8 @@ SCLTimerDisplay *buttonTimer;
     self.tintTopCircle = YES;
     
     // Font
-    _titleFontFamily = @"SourceSansPro-Bold";
-    _bodyTextFontFamily = @"SourceSansPro-Regular";
+    _titleFontFamily = @"SourceSansPro-Regular";
+    _bodyTextFontFamily = @"SourceSansPro-Light";
     _buttonsFontFamily = @"SourceSansPro-Regular";
     _titleFontSize = 21.0f;
     _bodyFontSize = 21.0f;
@@ -787,10 +787,10 @@ SCLTimerDisplay *buttonTimer;
     switch (buttonStyle) {
         case StyleDefault:
             btn.buttonFormatBlock = ^NSDictionary* (void)
-            {
-                NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
-                buttonConfig[@"backgroundColor"] = [UIColor colorWithWhite:0.906 alpha:1.000];
-                buttonConfig[@"textColor"] = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
+        {
+            NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+            buttonConfig[@"backgroundColor"] = [UIColor colorWithWhite:0.906 alpha:1.000];
+            buttonConfig[@"textColor"] = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
             return buttonConfig;
         };
             break;
@@ -1006,7 +1006,8 @@ SCLTimerDisplay *buttonTimer;
         // No custom text
         if (_attributedFormatBlock == nil)
         {
-            _viewText.text = subTitle;
+            //_viewText.text = subTitle;
+            _viewText.attributedText = [self convertHtmlTagsToAttributedString:subTitle];
         }
         else
         {
@@ -1158,6 +1159,67 @@ SCLTimerDisplay *buttonTimer;
     
     // Chainable objects
     return [[SCLAlertViewResponder alloc] init:self];
+}
+
+- (NSMutableAttributedString *)convertHtmlTagsToAttributedString:(NSString *)subtitle
+{
+    NSString *formattedString = [subtitle stringByReplacingOccurrencesOfString:@"<b>" withString:@""];
+    formattedString = [formattedString stringByReplacingOccurrencesOfString:@"</b>" withString:@""];
+    
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:formattedString];
+    
+    [attStr addAttribute:NSFontAttributeName
+                   value:[UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize]
+                   range:NSMakeRange(0,attStr.length)];
+    
+    NSRange startRange = [subtitle rangeOfString:@"<b>"];
+    
+    for( ;; )
+    {
+        
+        if (startRange.location != NSNotFound)
+        {
+            
+            NSRange targetRange;
+            
+            targetRange.location = startRange.location + startRange.length;
+            targetRange.length = [subtitle length] - targetRange.location;
+            
+            NSRange endRange = [subtitle rangeOfString:@"</b>" options:0 range:targetRange];
+            
+            if (endRange.location != NSNotFound)
+            {
+                
+                targetRange.length = endRange.location - targetRange.location;
+                NSString *selectedRangeString = [subtitle substringWithRange:targetRange];
+                targetRange = [formattedString rangeOfString:selectedRangeString];
+                
+                [attStr addAttribute:NSFontAttributeName
+                               value:[UIFont fontWithName:@"SourceSansPro-Regular" size:_bodyFontSize]
+                               range:targetRange];
+                
+                NSRange restOfString;
+                
+                restOfString.location = endRange.location + endRange.length;
+                restOfString.length = [subtitle length] - restOfString.location;
+                
+                startRange = [subtitle rangeOfString:@"<b>" options:0 range:restOfString];
+                
+            }
+            else
+            {
+                break;
+            }
+            
+        }
+        else
+        {
+            break;
+        }
+        
+    }
+    
+    return attStr;
 }
 
 #pragma mark - Show using UIViewController

@@ -36,6 +36,8 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
         contentRect = CGRectUnion(contentRect, view.frame);
     }
     self.scrollView.contentSize = contentRect.size;
+        
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,7 +62,7 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
         
     } buttonStyle:StyleDefaultWithBoldText];
     
-    [alert showSuccess:kSuccessTitle subTitle:kSubtitle closeButtonTitle:nil];
+    [alert showSuccess:kSuccessTitle subTitle:@"Möchtest du deinen neuen DIY-Tarif für <b>0.30 € pro 21 Days Wochen</b> buchen? Du hast dann <b>200 MB</b> und <b>200 Min/SMS</b> zur Verfügung. Dein neuer Tarif startet am <b>20.08.2015</b>" closeButtonTitle:nil];
 }
 
 - (IBAction)showSuccessWithHorizontalButtons:(id)sender {
