@@ -398,10 +398,10 @@ SCLTimerDisplay *buttonTimer;
         if (_horizontalButtons) {
             x += btn.frame.size.width + 10.0f;
         } else {
-            y += btn.frame.size.height;
+            y += btn.frame.size.height+1;
         }
     }
-    
+    y --;
     // Adapt window height according to icon size
     self.windowHeight = _useLargerIcon ? y : self.windowHeight;
     _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, _windowWidth, _windowHeight);
@@ -773,6 +773,50 @@ SCLTimerDisplay *buttonTimer;
     return btn;
 }
 
+- (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action buttonStyle:(SCLButtonStyle)buttonStyle
+{
+    SCLButton *btn = [self addButton:title];
+    
+    switch (buttonStyle) {
+        case StyleDefault:
+            btn.buttonFormatBlock = ^NSDictionary* (void)
+            {
+                NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+                buttonConfig[@"backgroundColor"] = [UIColor colorWithWhite:0.906 alpha:1.000];
+                buttonConfig[@"textColor"] = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
+            return buttonConfig;
+        };
+            break;
+        case StyleDefaultWithBoldText:
+            btn.buttonFormatBlock = ^NSDictionary* (void)
+        {
+            NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+            buttonConfig[@"backgroundColor"] = [UIColor colorWithWhite:0.906 alpha:1.000];
+            buttonConfig[@"textColor"] = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
+            return buttonConfig;
+        };
+            break;
+        case StyleHighlighted:
+            btn.buttonFormatBlock = ^NSDictionary* (void)
+        {
+            NSMutableDictionary *buttonConfig = [[NSMutableDictionary alloc] init];
+            buttonConfig[@"backgroundColor"] = [UIColor colorWithRed:0.925 green:0.412 blue:0.341 alpha:1.000];
+            buttonConfig[@"textColor"] = [UIColor whiteColor];
+            return buttonConfig;
+        };
+            break;
+        default:
+            break;
+    }
+    
+    
+    btn.actionType = SCLBlock;
+    btn.actionBlock = action;
+    [btn addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return btn;
+}
+
 - (SCLButton *)addButton:(NSString *)title validationBlock:(SCLValidationBlock)validationBlock actionBlock:(SCLActionBlock)action
 {
     SCLButton *btn = [self addButton:title actionBlock:action];
@@ -1026,36 +1070,40 @@ SCLTimerDisplay *buttonTimer;
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
         
-        if(style == ValenciaSuccess) {
-            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
-        }
-        else if(style == ValenciaWarning) {
-            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
-            
-            [self removeTopCircle];
-        }
-        else if(style == ValenciaError) {
-            btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
-        }
-        else if(style == ValenciaConfirmation) {
-            if(btn.actionType == SCLNone) {
-                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
-                [btn setTitleColor:[UIColor colorWithRed:0.44 green:0.43 blue:0.43 alpha:1.00] forState:UIControlStateNormal];
+        if (btn.buttonFormatBlock == nil)
+        {
+            if(style == ValenciaSuccess) {
+                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
             }
-            else {
-                btn.defaultBackgroundColor = [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00];
+            else if(style == ValenciaWarning) {
+                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
+                
+                [self removeTopCircle];
+            }
+            else if(style == ValenciaError) {
+                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
+            }
+            else if(style == ValenciaConfirmation) {
+                if(btn.actionType == SCLNone) {
+                    btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
+                    [btn setTitleColor:[UIColor colorWithRed:0.44 green:0.43 blue:0.43 alpha:1.00] forState:UIControlStateNormal];
+                }
+                else {
+                    btn.defaultBackgroundColor = [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00];
+                }
+            }
+            else if(style == ValenciaCancelConfirmation) {
+                if(btn.actionType == SCLNone) {
+                    btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
+                }
+                else {
+                    btn.defaultBackgroundColor = [UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:1.00];
+                }
+                
+                [self removeTopCircle];
             }
         }
-        else if(style == ValenciaCancelConfirmation) {
-            if(btn.actionType == SCLNone) {
-                btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.00]};};
-            }
-            else {
-                btn.defaultBackgroundColor = [UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:1.00];
-            }
-            
-            [self removeTopCircle];
-        }
+        
         if (!btn.defaultBackgroundColor) {
             btn.defaultBackgroundColor = viewColor;
         }

@@ -43,6 +43,13 @@ typedef NS_ENUM(NSInteger, SCLAlertViewStyle)
     ValenciaCancelConfirmation
 };
 
+typedef NS_ENUM(NSInteger, SCLButtonStyle)
+{
+    StyleDefault,
+    StyleDefaultWithBoldText,
+    StyleHighlighted
+};
+
 /** Alert hide animation styles
  *
  * Set SCLAlertView hide animation type.
@@ -335,6 +342,15 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * @param buttonFormatBlock: a formatBlock for customizing the button style.
  */
 - (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action buttonFormatBlock:(ButtonFormatBlock)buttonFormatBlock;
+
+/** Add a Button with a title, a block to handle when the button is pressed, and a Button style for customizing the button style.
+ *
+ * @param title The text displayed on the button.
+ * @param action A block of code to be executed when the button is pressed.
+ * @param buttonStyle: enum for predefined customizations for the button
+ */
+
+- (SCLButton *)addButton:(NSString *)title actionBlock:(SCLActionBlock)action buttonStyle:(SCLButtonStyle)buttonStyle;
 
 /** Add a Button with a title, a block to handle validation, and a block to handle when the button is pressed and validation succeeds.
  *
