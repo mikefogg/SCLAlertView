@@ -223,6 +223,7 @@ SCLTimerDisplay *buttonTimer;
     _labelTitle.font = [UIFont fontWithName:_titleFontFamily size:_titleFontSize];
     _labelTitle.frame = CGRectMake(12.0f, kTitleTop, _windowWidth - 24.0f, kTitleHeight);
     
+    
     // View text
     _viewText.editable = NO;
     _viewText.allowsEditingTextAttributes = YES;
@@ -251,7 +252,7 @@ SCLTimerDisplay *buttonTimer;
     
     // Colors
     self.backgroundViewColor = [UIColor whiteColor];
-    _labelTitle.textColor = [UIColor colorWithRed:0.46 green:0.46 blue:0.46 alpha:1.00]; //Dark Grey
+    _labelTitle.textColor = [UIColor colorWithWhite:0.337 alpha:1.000]; //Dark Grey
     _viewText.textColor = [UIColor colorWithRed:0.64 green:0.64 blue:0.64 alpha:1.00]; //Light Grey
     _contentView.layer.borderColor = UIColorFromHEX(0xCCCCCC).CGColor; //Light Grey
     
@@ -980,6 +981,10 @@ SCLTimerDisplay *buttonTimer;
             break;
     }
     
+    if (!iconImage) {
+        [self removeTopCircle];
+    }
+    
     // Custom Alert color
     if(_customViewColor)
     {
@@ -1085,8 +1090,6 @@ SCLTimerDisplay *buttonTimer;
             }
             else if(style == ValenciaWarning) {
                 btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
-                
-                [self removeTopCircle];
             }
             else if(style == ValenciaError) {
                 btn.completeButtonFormatBlock = ^{return @{@"backgroundColor" : [UIColor colorWithRed:0.92 green:0.42 blue:0.36 alpha:1.00]};};
@@ -1108,7 +1111,6 @@ SCLTimerDisplay *buttonTimer;
                     btn.defaultBackgroundColor = [UIColor colorWithRed:0.33 green:0.33 blue:0.33 alpha:1.00];
                 }
                 
-                [self removeTopCircle];
             }
         }
         
