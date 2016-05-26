@@ -402,7 +402,8 @@ SCLTimerDisplay *buttonTimer;
         } else {
             y += btn.frame.size.height;
             //to add padding between button except the last 2 elements
-            if (index < _buttons.count-2) {
+            int numOfElements = (int)_buttons.count-2;
+            if (index < numOfElements && numOfElements != -1 && numOfElements != 0) {
                 y++;
             }
             
