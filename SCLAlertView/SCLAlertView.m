@@ -1168,11 +1168,16 @@ SCLTimerDisplay *buttonTimer;
     NSString *formattedString = [subtitle stringByReplacingOccurrencesOfString:@"<b>" withString:@""];
     formattedString = [formattedString stringByReplacingOccurrencesOfString:@"</b>" withString:@""];
     
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:formattedString];
     
     UIColor *greyishBrownColor = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
     
-    NSDictionary *defaultAttr = @{NSFontAttributeName:[UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize],NSForegroundColorAttributeName:greyishBrownColor};
+    NSDictionary *defaultAttr = @{NSFontAttributeName:[UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize],
+        NSForegroundColorAttributeName:greyishBrownColor,
+        NSParagraphStyleAttributeName:paragraphStyle};
     
     NSDictionary *boldAttr = @{NSFontAttributeName:[UIFont fontWithName:@"SourceSansPro-Regular" size:_bodyFontSize],NSForegroundColorAttributeName:greyishBrownColor};
     
