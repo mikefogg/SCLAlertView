@@ -980,6 +980,9 @@ SCLTimerDisplay *buttonTimer;
             iconImage = [UIImage imageNamed:@"alert-warning-icon"];
             self.useLargerIcon = YES;
             break;
+        case ValenciaWarning:
+            self.useLargerIcon = YES;
+            break;
     }
     
     if (!iconImage) {

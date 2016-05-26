@@ -112,9 +112,17 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
 
 - (IBAction)showWarning:(id)sender
 {
-    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
     
-    [alert showWarning:self title:kWarningTitle subTitle:kSubtitle closeButtonTitle:kButtonTitle];
+    [alert addButton:NSLocalizedString(@"first_time_diy_configuration_confirmation_popup_enough_balance_submit", nil) actionBlock:^{
+        
+    }buttonStyle:StyleHighlighted];
+    
+    [alert addButton:NSLocalizedString(@"first_time_diy_configuration_confirmation_popup_enough_balance_cancel",nil) actionBlock:nil buttonStyle:StyleDefault];
+    
+    NSString *body = @"You have not saved your Submission yet. Please save the Submission before accessing the Responses list. Blah de blah de blah, blah. Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.Blah de blah de blah, blah.";
+    
+    [alert showWarning:NSLocalizedString(@"first_time_diy_configuration_confirmation_popup_enough_balance_title", nil) subTitle:body closeButtonTitle:nil];
 }
 
 - (IBAction)showInfo:(id)sender
