@@ -50,11 +50,11 @@ NSString *kAttributeTitle = @"Attributed string operation successfully completed
     
     [alert addButton:@"First Button" actionBlock:^{
         
-    } buttonStyle:StyleDefault];
+    }];
     
     [alert addButton:@"Second Button" actionBlock:^{
         
-    }];
+    } buttonStyle:StyleDefault];
     
     [alert addButton:@"Third Button" actionBlock:^{
         

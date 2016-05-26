@@ -390,6 +390,7 @@ SCLTimerDisplay *buttonTimer;
     
     // Buttons
     CGFloat x = 0;
+    int index = 0;
     for (SCLButton *btn in _buttons)
     {
         btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
@@ -398,10 +399,16 @@ SCLTimerDisplay *buttonTimer;
         if (_horizontalButtons) {
             x += btn.frame.size.width + 10.0f;
         } else {
-            y += btn.frame.size.height+1;
+            y += btn.frame.size.height;
+            //to add padding between button except the last 2 elements
+            if (index < _buttons.count-2) {
+                y++;
+            }
+            
         }
+        index ++;
     }
-    y --;
+    
     // Adapt window height according to icon size
     self.windowHeight = _useLargerIcon ? y : self.windowHeight;
     _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, _windowWidth, _windowHeight);
