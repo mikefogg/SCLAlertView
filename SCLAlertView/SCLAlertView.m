@@ -1168,9 +1168,13 @@ SCLTimerDisplay *buttonTimer;
     
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:formattedString];
     
-    [attStr addAttribute:NSFontAttributeName
-                   value:[UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize]
-                   range:NSMakeRange(0,attStr.length)];
+    UIColor *greyishBrownColor = [UIColor colorWithRed:0.263 green:0.255 blue:0.255 alpha:1.000];
+    
+    NSDictionary *defaultAttr = @{NSFontAttributeName:[UIFont fontWithName:_bodyTextFontFamily size:_bodyFontSize],NSForegroundColorAttributeName:greyishBrownColor};
+    
+    NSDictionary *boldAttr = @{NSFontAttributeName:[UIFont fontWithName:@"SourceSansPro-Regular" size:_bodyFontSize],NSForegroundColorAttributeName:greyishBrownColor};
+    
+    [attStr addAttributes:defaultAttr range:NSMakeRange(0,attStr.length)];
     
     NSRange startRange = [subtitle rangeOfString:@"<b>"];
     
@@ -1194,9 +1198,7 @@ SCLTimerDisplay *buttonTimer;
                 NSString *selectedRangeString = [subtitle substringWithRange:targetRange];
                 targetRange = [formattedString rangeOfString:selectedRangeString];
                 
-                [attStr addAttribute:NSFontAttributeName
-                               value:[UIFont fontWithName:@"SourceSansPro-Regular" size:_bodyFontSize]
-                               range:targetRange];
+                [attStr addAttributes:boldAttr range:targetRange];
                 
                 NSRange restOfString;
                 
