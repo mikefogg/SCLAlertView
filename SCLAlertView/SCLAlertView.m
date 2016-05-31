@@ -27,6 +27,7 @@
 #define EDGES_PADDING 40.0f
 #define DEFAULT_WINDOW_WIDTH [UIScreen mainScreen].bounds.size.width - EDGES_PADDING
 #define TOP_PADDING 30.0f
+#define ButtonHeight 70.0f
 
 @interface SCLAlertView ()  <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -394,7 +395,7 @@ SCLTimerDisplay *buttonTimer;
     int index = 0;
     for (SCLButton *btn in _buttons)
     {
-        btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
+        btn.frame = CGRectMake(x, y, btn.frame.size.width, ButtonHeight);
         
         // Add horizontal or vertical offset acording on _horizontalButtons parameter
         if (_horizontalButtons) {
